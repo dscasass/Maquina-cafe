@@ -33,28 +33,28 @@
 
 *Vaso pequeno*
 
-- 1 vaso Tinto ($1000): 8 g cafe, 120 ml agua
-- 1 vaso Americano ($1500): 10 g cafe, 180 ml agua
-- 1 vaso Cafe con leche ($2000): 8 g cafe, 60 ml leche, 90 ml agua
-- 1 vaso Capuchino ($2500): 9 g cafe, 100 ml leche, 60 ml agua
-- 1 vaso Te ($1200): 2 g te, 150 ml agua
+- 1 vaso pequeno Tinto ($2000): 2 g cafe, 150 ml agua 
+- 1 vaso pequeno Americano ($2500): 3 g cafe, 150 ml agua 
+- 1 vaso pequeno Cafe con leche ($3000): 2 g cafe, 50 ml leche, 100 ml agua 
+- 1 vaso pequeno Capuchino ($3500): 3 g cafe, 60 ml leche, 90 ml agua 
+- 1 vaso pequeno Te ($1800): 2 g te, 150 ml agua 
 
 
-*Vaso mediano (+$500 y +40 ml agua)*
+*Vaso mediano*
 
-- 1 vaso Tinto ($1500): 8 g cafe, 160 ml agua
-- 1 vaso Americano ($2000): 10 g cafe, 220 ml agua
-- 1 vaso Cafe con leche ($2500): 8 g cafe, 60 ml leche, 130 ml agua
-- 1 vaso Capuchino ($3000): 9 g cafe, 100 ml leche, 100 ml agua
-- 1 vaso Te ($1700): 2 g te, 190 ml agua
+- 1 vaso mediano Tinto ($2500): 2 g cafe, 210 ml agua 
+- 1 vaso mediano Americano ($3000): 3 g cafe, 210 ml agua 
+- 1 vaso mediano Cafe con leche ($3500): 2 g cafe, 50 ml leche, 160 ml agua 
+- 1 vaso mediano Capuchino ($4000): 3 g cafe, 60 ml leche, 150 ml agua 
+- 1 vaso mediano Te ($2300): 2 g te, 210 ml agua 
 
-*Vaso grande (+$1000 y +80 ml agua)*
+*Vaso grande*
 
-- 1 vaso Tinto ($2000): 8 g cafe, 200 ml agua
-- 1 vaso Americano ($2500): 10 g cafe, 260 ml agua
-- 1 vaso Cafe con leche ($3000): 8 g cafe, 60 ml leche, 170 ml agua
-- 1 vaso Capuchino ($3500): 9 g cafe, 100 ml leche, 140 ml agua
-- 1 vaso Te ($2200): 2 g te, 230 ml agua
+- 1 vaso grande Tinto ($3000): 2 g cafe, 270 ml agua 
+- 1 vaso grande Americano ($3500): 3 g cafe, 270 ml agua 
+- 1 vaso grande Cafe con leche ($4000): 2 g cafe, 50 ml leche, 220 ml agua 
+- 1 vaso grande Capuchino ($4500): 3 g cafe, 60 ml leche, 210 ml agua 
+- 1 vaso grande Te ($2800): 2 g te, 270 ml agua 
 
 
 *Azucar*
