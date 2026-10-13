@@ -10,6 +10,9 @@
 - Vasos (variable, numero entero, unidades)
 - Te (variable, numero, g)
 - Azucar (variable, numero, g)
+- Vasos pequenos (variable, numero entero, unidades)
+- Vasos medianos (variable, numero entero, unidades)
+- Vasos grandes (variable, numero entero, unidades)
 
 #### *Dinero/ Inventario:*
 - Monedas 1000 500 200 (constante, numero, $)
@@ -26,41 +29,50 @@
 - MILILITROS: ml
 
 
-#### *Recetas:*
+#### Recetas:
 
-- _Tinto ($1000):_ 
-8 g cafe
-120 ml agua
+*Vaso pequeno*
 
-- _1 vaso Americano ($1500):_
-10 g cafe
-180 ml agua
+- 1 vaso Tinto ($1000): 8 g cafe, 120 ml agua
+- 1 vaso Americano ($1500): 10 g cafe, 180 ml agua
+- 1 vaso Cafe con leche ($2000): 8 g cafe, 60 ml leche, 90 ml agua
+- 1 vaso Capuchino ($2500): 9 g cafe, 100 ml leche, 60 ml agua
+- 1 vaso Te ($1200): 2 g te, 150 ml agua
 
-- _1 vaso Cafe con leche ($2000):_
-8 g cafe 
-60 ml leche
-90 ml agua
 
-- _1 vaso Capuchino ($2500):_
-9 g cafe
-100 ml leche
-60 ml agua
+*Vaso mediano (+$500 y +40 ml agua)*
 
-- _1 vaso Te ($1200):_
-2 g te, 150 ml agua
-1 vaso (si pide azucar se gastan 5 g mas)
+- 1 vaso Tinto ($1500): 8 g cafe, 160 ml agua
+- 1 vaso Americano ($2000): 10 g cafe, 220 ml agua
+- 1 vaso Cafe con leche ($2500): 8 g cafe, 60 ml leche, 130 ml agua
+- 1 vaso Capuchino ($3000): 9 g cafe, 100 ml leche, 100 ml agua
+- 1 vaso Te ($1700): 2 g te, 190 ml agua
+
+*Vaso grande (+$1000 y +80 ml agua)*
+
+- 1 vaso Tinto ($2000): 8 g cafe, 200 ml agua
+- 1 vaso Americano ($2500): 10 g cafe, 260 ml agua
+- 1 vaso Cafe con leche ($3000): 8 g cafe, 60 ml leche, 170 ml agua
+- 1 vaso Capuchino ($3500): 9 g cafe, 100 ml leche, 140 ml agua
+- 1 vaso Te ($2200): 2 g te, 230 ml agua
+
+
+*Azucar*
+
+- Si pide azucar se suman $200 y se gastan 5 g mas
 
 
 ## **SALIDAS** 
 
 - Cafe o te 
 - Cambio ($) 
-- Mensajes (saldo insuficiente, producto agotado, no hay cambio)
+- Mensajes (saldo insuficiente, producto agotado, no hay cambio, Finalizado)
 
 
 
 ## REGLAS DE NEGOCIO
 
+- El total del pedido es el precio del producto + lo del tamano del vaso + el azucar (si la pidio)
 - Solo sirve si el saldo alcanza para el precio
 - Tiene que haber ingredientes y vaso suficientes
 - Si sobra plata devuelve cambio, solo si tiene con que darlo
