@@ -14,7 +14,7 @@
 - Vasos grandes (variable, Number, unidades)
 
 #### *Dinero/ Inventario:*
-- Monedas 1000 500 200 (variable, Number, unidades: cuantas hay de cada una para dar cambio)
+- Monedas 1000 500 200 100 (variable, Number, unidades: cuantas hay de cada una para dar cambio)
 - Billetes 2000 5000 10000 20000 (variable, Number, unidades: cuantos hay de cada uno para dar cambio)
 
 #### *Entradas del usuario:*
@@ -75,6 +75,7 @@
 - Cafe o te
 - Total del pedido ($)
 - Cambio ($)
+- Billetes y monedas del cambio (cuantos de cada denominacion, unidades)
 - Mensajes (saldo insuficiente, producto agotado, no hay cambio, Finalizado)
 
 
@@ -85,6 +86,9 @@
 - Solo sirve si el saldo alcanza para el total del pedido
 - Tiene que haber ingredientes y vaso del tamano elegido suficientes
 - Si sobra plata devuelve cambio, solo si tiene con que darlo
+- El cambio se arma sumando billetes y monedas, empezando por el mas grande (20000, 10000, 5000, 2000, 1000, 500, 200 y 100), hasta que la suma sea igual al cambio
+- La moneda de 100 permite dar cualquier cambio exacto, porque todos los precios son multiplos de 100
+- El billete o moneda que mete el usuario queda guardado en el inventario de dinero
 - Al servir descuenta los ingredientes y el vaso del inventario
 
 
@@ -103,20 +107,23 @@
 10. El usuario mete dinero (moneda o billete) y la maquina lo lee como dineroIngresado
 11. La maquina suma el dineroIngresado al saldo: saldo = saldo + dineroIngresado
 12. Se compara el saldo con el totalPedido
-    * Si el saldo es menor, la maquina muestra "saldo insuficiente" y le dice cuanto falta (totalPedido - saldo). Se devuelve al paso 10 para que meta mas dinero
-    * Si el saldo alcanza, continua al paso 13
+    - Si el saldo es menor, la maquina muestra "saldo insuficiente" y le dice cuanto falta (totalPedido - saldo). Se devuelve al paso 10 para que meta mas dinero
+    - Si el saldo alcanza, continua al paso 13
 13. Se revisa el inventario: que haya suficiente cafe, te, leche y agua (la de la receta + la extra del tamano) y minimo 1 vaso del tamano elegido
-    * Si falta algun ingrediente o no hay vasos, la maquina muestra "producto agotado", devuelve el saldo y vuelve al paso 5
-    * Si hay todo, continua al paso 14
+    - Si falta algun ingrediente o no hay vasos, la maquina muestra "producto agotado", devuelve el saldo y vuelve al paso 5
+    - Si hay todo, continua al paso 14
 14. Se calcula el cambio: cambio = saldo - totalPedido
-15. Si el cambio es mayor a 0, se revisa si hay monedas y billetes para darlo
-    * Si no hay con que darlo, la maquina muestra "no hay cambio, ingrese el valor exacto", devuelve el saldo y vuelve al paso 5
-    * Si se puede dar, continua al paso 16
-16. La maquina resta del inventario los ingredientes de la receta (sumando el agua extra del tamano) y 1 al vaso del tamano elegido
-17. Si el usuario pidio azucar, se restan 5 g de azucar del inventario
-18. La maquina sirve el producto (cafe o te)
-19. La maquina entrega el cambio y resta las monedas y billetes usados del inventario de dinero
-20. La maquina muestra "Finalizado"
-21. El saldo vuelve a 0
-22. La maquina queda lista para otro usuario (vuelve al paso 5)
-
+15. Se arma el cambio sumando billetes y monedas, empezando por el mas grande (20000, 10000, 5000, 2000, 1000, 500, 200 y 100). Se suma una denominacion mientras la suma no se pase del cambio, y se pasa a la siguiente cuando ya no cabe. Por ejemplo, para un cambio de $15800: 10000 + 5000 + 500 + 200 + 100 = 15800
+    - Se lleva la cuenta de cuantos billetes y monedas de cada denominacion se usaron
+     Cuando la suma es igual al cambio, faltaPorDar = cambio - suma = 0
+16. Si el cambio es mayor a 0, se revisa si hay billetes y monedas suficientes de cada denominacion
+    - Si no hay con que darlo, la maquina muestra "no hay cambio, ingrese el valor exacto", devuelve el saldo y vuelve al paso 5
+    - Si se puede dar, continua al paso 17
+17. La maquina resta del inventario los ingredientes de la receta (sumando el agua extra del tamano) y 1 al vaso del tamano elegido
+18. Si el usuario pidio azucar, se restan 5 g de azucar del inventario
+19. La maquina sirve el producto (cafe o te)
+20. La maquina entrega el cambio, mostrando cuantos billetes y monedas de cada denominacion, y los resta del inventario de dinero
+21. El billete o moneda que metio el usuario se suma al inventario de dinero
+22. La maquina muestra "Finalizado"
+23. El saldo vuelve a 0
+24. La maquina queda lista para otro usuario (vuelve al paso 5)
