@@ -1,3 +1,6 @@
+
+
+
 // Inventario de productos
 let saldo = 0;    // plata que lleva metida el usuario ($)
 let cafe = 500;   // gramos (g)
@@ -76,6 +79,69 @@ let entregaMonedas1000 = 0;
 let entregaMonedas500 = 0;
 let entregaMonedas200 = 0;
 let entregaMonedas100 = 0;
+
+
+
+
+//este calcula saldo insuficiente
+
+  if (dineroIngresado < totalPedido) {
+    mensaje = "saldo insuficiente";
+  } 
+
+
+//este calcula si el producto se agoto en cafe
+
+  else if (cafe < tintoCafe || agua < tintoAgua || vasos < 1 || (conAzucar === true && azucar < azucarPorPorcion)) {
+    mensaje = "producto agotado";
+  } 
+
+//Se llega aquí solo si la plata alcanza y no falta nada
+
+  else {
+    saldo = saldo + dineroIngresado;   // saldo: 0 + 20000 = 20000
+    saldo = saldo - totalPedido;       // 20000 - 2200 = 17800
+    cambio = saldo;                    // el cambio es lo que sobró: 17800
+    saldo = saldo - cambio;            // se entrega, el saldo vuelve a 0
+
+    cafe = cafe - tintoCafe;           // 500 - 2 = 498
+    agua = agua - tintoAgua;           // 5000 - 150 = 4850
+    vasos = vasos - 1;                 // 30 - 1 = 29
+    }
+
+    if (conAzucar === true) {
+      azucar = azucar - azucarPorPorcion;
+
+
+    }
+
+
+//Menu
+let menu =parseInt(prompt("Elige una opcion"));
+
+switch (menu) {
+    case 1:
+        alert("Tinto");
+      totalPedido = tintoPrecio;
+      console.log("tintoAgua")
+
+//este calcula cuánto cuesta el pedido cuando eligieron tinto.
+if (productoElegido === "tinto") {
+  totalPedido = tintoPrecio;
+}
+  if (conAzucar === true) {
+    totalPedido = totalPedido + precioAzucar;
+  }
+        break;
+        case 2:
+         alert("Americano");
+      totalPedido = americanoPrecio;
+      console.log("americano")
+
+    default:
+        break;
+}
+
 
 // Ejemplo: capuchino con azucar, pagando con un billete de 20000
 totalPedido = capuchinoPrecio;
