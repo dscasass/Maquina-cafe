@@ -6,10 +6,9 @@ let agua = 5000;  // mililitros (ml)
 let te = 100;     // gramos (g)
 let azucar = 300; // gramos (g)
 
-// Inventario de vasos (unidades)
-let vasosPequenos = 30; // 5 oz
-let vasosMedianos = 30; // 7 oz
-let vasosGrandes = 30;  // 9 oz
+// Vaso (un solo tipo)
+let vasos = 30;                // unidades disponibles
+const capacidadVaso = 150;     // lo que le cabe al vaso (ml)
 
 // Monedas y billetes que hay para dar cambio (unidades)
 let monedas1000 = 20;
@@ -21,51 +20,49 @@ let billetes5000 = 10;
 let billetes10000 = 5;
 let billetes20000 = 5;
 
-// Tamaños de vaso: lo que se suma al precio ($) y al agua (ml)
-const costoPequeno = 0;
-const costoMediano = 500;
-const costoGrande = 1000;
-const aguaExtraPequeno = 0;
-const aguaExtraMediano = 60;
-const aguaExtraGrande = 120;
-
 // Azucar
 const precioAzucar = 200;   // lo que cuesta pedirla ($)
 const azucarPorPorcion = 5; // lo que se gasta (g)
 
-// Recetas del vaso pequeno: precio en $, cafe y te en g, leche y agua en ml
+// Recetas: precio en $, cafe y te en g, leche y agua en ml
+// "Capacidad" = lo que lleva el vaso de ese producto segun la receta (ml)
 const tintoPrecio = 2000;
 const tintoCafe = 2;
 const tintoAgua = 150;
+const tintoCapacidad = 150;          // 150 de agua
 
 const americanoPrecio = 2500;
 const americanoCafe = 3;
 const americanoAgua = 150;
+const americanoCapacidad = 150;      // 150 de agua
 
 const cafeConLechePrecio = 3000;
 const cafeConLecheCafe = 2;
 const cafeConLecheLeche = 50;
 const cafeConLecheAgua = 100;
+const cafeConLecheCapacidad = 150;   // 50 de leche + 100 de agua
 
 const capuchinoPrecio = 3500;
 const capuchinoCafe = 3;
 const capuchinoLeche = 60;
 const capuchinoAgua = 90;
+const capuchinoCapacidad = 150;      // 60 de leche + 90 de agua
 
 const tePrecio = 1800;
 const teCantidad = 2;
 const teAgua = 150;
+const teCapacidad = 150;             // 150 de agua
 
 // Lo que hace el usuario (ejemplo de un pedido)
 let dineroIngresado = 20000;       // plata que mete: un billete de 20000 ($)
 let productoElegido = "capuchino"; // producto que escoge
-let tamanoVaso = "mediano";        // pequeno, mediano o grande
 let conAzucar = true;              // si quiere azucar o no
 
 // Salidas
 let totalPedido = 0;      // lo que cuesta el pedido ($)
 let cambio = 0;           // plata que se devuelve ($)
 let productoServido = ""; // cafe o te
+let contenidoVaso = 0;    // lo que lleva el vaso servido (ml)
 let mensaje = "";         // saldo insuficiente, producto agotado, no hay cambio o finalizado
 
 // Cambio: cuantos billetes y monedas se entregan de cada denominacion (unidades)
@@ -80,8 +77,8 @@ let entregaMonedas500 = 0;
 let entregaMonedas200 = 0;
 let entregaMonedas100 = 0;
 
-// Ejemplo: capuchino mediano con azucar, pagando con un billete de 20000
-totalPedido = capuchinoPrecio + costoMediano;
+// Ejemplo: capuchino con azucar, pagando con un billete de 20000
+totalPedido = capuchinoPrecio;
 totalPedido = totalPedido + precioAzucar;
 
 // El usuario mete la plata y se calcula el cambio
@@ -93,23 +90,27 @@ saldo = saldo - cambio;
 // Se restan los ingredientes y el vaso del inventario
 cafe = cafe - capuchinoCafe;
 leche = leche - capuchinoLeche;
-agua = agua - capuchinoAgua - aguaExtraMediano;
+agua = agua - capuchinoAgua;
 azucar = azucar - azucarPorPorcion;
-vasosMedianos = vasosMedianos - 1;
+vasos = vasos - 1;
+
+// Lo que lleva el vaso segun la receta (cabe en capacidadVaso)
+productoServido = "cafe";
+contenidoVaso = capuchinoCapacidad;
 
 // El billete de 20000 que metio el usuario queda guardado en la maquina
 billetes20000 = billetes20000 + 1;
 
 // Armar el cambio: se suman billetes y monedas de mayor a menor
-// hasta que la suma sea igual al cambio (15800 = 10000 + 5000 + 500 + 200 + 100)
+// hasta que la suma sea igual al cambio (16300 = 10000 + 5000 + 1000 + 200 + 100)
 sumaEntregada = sumaEntregada + 10000;
 entregaBilletes10000 = entregaBilletes10000 + 1;
 
 sumaEntregada = sumaEntregada + 5000;
 entregaBilletes5000 = entregaBilletes5000 + 1;
 
-sumaEntregada = sumaEntregada + 500;
-entregaMonedas500 = entregaMonedas500 + 1;
+sumaEntregada = sumaEntregada + 1000;
+entregaMonedas1000 = entregaMonedas1000 + 1;
 
 sumaEntregada = sumaEntregada + 200;
 entregaMonedas200 = entregaMonedas200 + 1;
@@ -131,17 +132,3 @@ monedas200 = monedas200 - entregaMonedas200;
 monedas100 = monedas100 - entregaMonedas100;
 
 mensaje = "Finalizado";
-
-console.log("Total del pedido: $" + totalPedido);
-console.log("Cambio: $" + cambio);
-console.log("Billetes de 20000: " + entregaBilletes20000);
-console.log("Billetes de 10000: " + entregaBilletes10000);
-console.log("Billetes de 5000: " + entregaBilletes5000);
-console.log("Billetes de 2000: " + entregaBilletes2000);
-console.log("Monedas de 1000: " + entregaMonedas1000);
-console.log("Monedas de 500: " + entregaMonedas500);
-console.log("Monedas de 200: " + entregaMonedas200);
-console.log("Monedas de 100: " + entregaMonedas100);
-console.log("Suma entregada: $" + sumaEntregada);
-console.log("Falta por dar: $" + faltaPorDar);
-console.log(mensaje);
