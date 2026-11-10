@@ -82,39 +82,166 @@ let entregaMonedas100 = 0;
 
 
 
+let cafeNecesario = 0;
+let aguaNecesaria = 0 ;
+let lecheNecesaria = 0 ;
 
-//este calcula saldo insuficiente
+productoElegido = prompt(
+  "Seleccione un producto: Tinto, Americano, Cafe con leche, Capuchino o Te"
+);
+
+switch (productoElegido) {
+
+  case "1":
+    totalPedido = tintoPrecio;
+    cafeNecesario = tintoCafe;
+    aguaNecesaria = tintoAgua;
+    lecheNecesaria = 0;
+    break;
+
+  case "2":
+    totalPedido = americanoPrecio;
+    cafeNecesario = americanoCafe;
+    aguaNecesaria = americanoAgua;
+    lecheNecesaria = 0;
+    break;
+
+  case "2":
+    totalPedido = cafeConLechePrecio;
+    cafeNecesario = cafeConLecheCafe;
+    aguaNecesaria = cafeConLecheAgua;
+    lecheNecesaria = cafeConLecheLeche;
+    break;
+
+  case "3":
+    totalPedido = capuchinoPrecio;
+    cafeNecesario = capuchinoCafe;
+    aguaNecesaria = capuchinoAgua;
+    lecheNecesaria = capuchinoLeche;
+    break;
+
+  case "4":
+    totalPedido = tePrecio;
+    cafeNecesario = 0;
+    aguaNecesaria = teAgua;
+    lecheNecesaria = 0;
+    break;
+
+  default:
+    totalPedido = 0;
+    mensaje = "Producto no valido";
+}
+
+
+if (
+  cafe < cafeNecesario ||
+  agua < aguaNecesaria ||
+  leche < lecheNecesaria ||
+  vasos < 1
+) {
+
+  mensaje = "Producto agotado";
+
+} else {
+
+  mensaje = "Hay ingredientes suficientes :(";
+
+}
+
+
+
+function calcularDinero() {
+
+  dineroIngresado = parseInt(prompt("Ingrese el dinero"));
 
   if (dineroIngresado < totalPedido) {
-    mensaje = "saldo insuficiente";
-  } 
+
+    mensaje = "Saldo insuficiente";
+    return -1;
+
+  } else {
+
+    cambio = dineroIngresado - totalPedido;
+
+    return cambio;
+
+  }}
 
 
-//este calcula si el producto se agoto en cafe
 
-  else if (cafe < tintoCafe || agua < tintoAgua || vasos < 1 || (conAzucar === true && azucar < azucarPorPorcion)) {
-    mensaje = "producto agotado";
-  } 
 
-//Se llega aquí solo si la plata alcanza y no falta nada
+if (mensaje === "Hay ingredientes suficientes") {
 
-  else {
-    saldo = saldo + dineroIngresado;   // saldo: 0 + 20000 = 20000
-    saldo = saldo - totalPedido;       // 20000 - 2200 = 17800
-    cambio = saldo;                    // el cambio es lo que sobró: 17800
-    saldo = saldo - cambio;            // se entrega, el saldo vuelve a 0
+  conAzucar = anadirAzucar();
 
-    cafe = cafe - tintoCafe;           // 500 - 2 = 498
-    agua = agua - tintoAgua;           // 5000 - 150 = 4850
-    vasos = vasos - 1;                 // 30 - 1 = 29
+  if (conAzucar === true) {
+
+    if (azucar >= azucarPorPorcion) {
+
+      totalPedido = totalPedido + precioAzucar;
+
+    } else {
+
+      mensaje = "No hay azucar suficiente";
+
     }
+
+  }
+
+  //ingredientes
+
+  if (mensaje === "Hay ingredientes suficientes") {
+
+    cambio = calcularDinero();
+
+    if (cambio !== -1) {
+
+      cafe = cafe - cafeNecesario;
+      agua = agua - aguaNecesaria;
+      leche = leche - lecheNecesaria;
+      vasos = vasos - 1;
+
+  }
+
+  // ESTO ES DE AZUCAR
+
+function añadirAzucar() {
+      return confirm("¿Desea añadir azucar?");
+ }
+
+    conAzucar = añadirAzucar();
 
     if (conAzucar === true) {
+      totalPedido = totalPedido + precioAzucar;
       azucar = azucar - azucarPorPorcion;
-
 
     }
 
+
+      alert("Pedido finalizado");
+      alert("Total: $" + totalPedido);
+      alert("Su cambio es: $" + cambio);
+
+    }
+
+  }
+
+
+
+
+
+
+
+
+
+
+if(productoElegido === "Tinto")
+  totalPedido = tintoPrecio;
+  cafeNecesario = tintoCafe;
+  aguaNecesaria = tintoAgua;
+  lecheCecesaria = 0;
+
+    
 
 //Menu
 let menu =parseInt(prompt("Elige una opcion"));
@@ -131,6 +258,7 @@ if (productoElegido === "tinto") {
 }
   if (conAzucar === true) {
     totalPedido = totalPedido + precioAzucar;
+    
   }
         break;
         case 2:
@@ -159,6 +287,7 @@ if (productoElegido === "tinto") {
     default:
         break;
 }
+
 
 
 // Ejemplo: capuchino con azucar, pagando con un billete de 20000
