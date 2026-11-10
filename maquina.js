@@ -138,6 +138,24 @@ if (productoElegido === "tinto") {
       totalPedido = americanoPrecio;
       console.log("americano")
 
+      break;
+        case 3:
+         alert("Cafe con leche");
+      totalPedido = cafeConLechePrecio;
+      console.log("Cafe con leche")
+
+      break;
+        case 4:
+         alert("Capuchino");
+      totalPedido = capuchinoPrecio;
+      console.log("Capuchino")
+
+      break;
+        case 5:
+         alert("Te");
+      totalPedido = tintoPrecio;
+      console.log("Te")
+
     default:
         break;
 }
