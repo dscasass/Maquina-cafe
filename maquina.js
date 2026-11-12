@@ -143,54 +143,68 @@ function darCambio(cambio) {
 }
 
 
+ // 1. Elegir producto
+  productoElegido = prompt(
+    "Seleccione un producto:\n1. Tinto\n2. Americano\n3. Cafe con leche\n4. Capuchino\n5. Te\n0. Apagar"
+  );
 
+  switch (productoElegido) {
 
+    case "1":
+      alert("Tinto - Precio: $" + tintoPrecio);
+      totalPedido = tintoPrecio;
+      cafeNecesario = tintoCafe;
+      aguaNecesaria = tintoAgua;
+      productoServido = "cafe";
+      break;
 
-productoElegido = prompt(
-  "Seleccione un producto: Tinto, Americano, Cafe con leche, Capuchino o Te"
-);
+    case "2":
+      alert("Americano - Precio: $" + americanoPrecio);
+      totalPedido = americanoPrecio;
+      cafeNecesario = americanoCafe;
+      aguaNecesaria = americanoAgua;
+      productoServido = "cafe";
+      break;
 
-switch (productoElegido) {
+    case "3":
+      alert("Cafe con leche - Precio: $" + cafeConLechePrecio);
+      totalPedido = cafeConLechePrecio;
+      cafeNecesario = cafeConLecheCafe;
+      aguaNecesaria = cafeConLecheAgua;
+      lecheNecesaria = cafeConLecheLeche;
+      productoServido = "cafe";
+      break;
 
-  case "1":
-    totalPedido = tintoPrecio;
-    cafeNecesario = tintoCafe;
-    aguaNecesaria = tintoAgua;
-    lecheNecesaria = 0;
-    break;
+    case "4":
+      alert("Capuchino - Precio: $" + capuchinoPrecio);
+      totalPedido = capuchinoPrecio;
+      cafeNecesario = capuchinoCafe;
+      aguaNecesaria = capuchinoAgua;
+      lecheNecesaria = capuchinoLeche;
+      productoServido = "cafe";
+      break;
 
-  case "2":
-    totalPedido = americanoPrecio;
-    cafeNecesario = americanoCafe;
-    aguaNecesaria = americanoAgua;
-    lecheNecesaria = 0;
-    break;
+    case "5":
+      alert("Te - Precio: $" + tePrecio);
+      totalPedido = tePrecio;
+      teNecesario = teCantidad;
+      aguaNecesaria = teAgua;
+      productoServido = "te";
+      break;
 
-  case "2":
-    totalPedido = cafeConLechePrecio;
-    cafeNecesario = cafeConLecheCafe;
-    aguaNecesaria = cafeConLecheAgua;
-    lecheNecesaria = cafeConLecheLeche;
-    break;
+    case "0":
+    case null:
+      seguir = false;
+      break;
 
-  case "3":
-    totalPedido = capuchinoPrecio;
-    cafeNecesario = capuchinoCafe;
-    aguaNecesaria = capuchinoAgua;
-    lecheNecesaria = capuchinoLeche;
-    break;
+    default:
+      alert("Producto no valido");
+  }
 
-  case "4":
-    totalPedido = tePrecio;
-    cafeNecesario = 0;
-    aguaNecesaria = teAgua;
-    lecheNecesaria = 0;
-    break;
+  // Solo sigue si escogio un producto
+  if (totalPedido > 0) {
 
-  default:
-    totalPedido = 0;
-    mensaje = "Producto no valido";
-}
+    alert("Procesando pedido...");
 
 
 if (
@@ -303,50 +317,6 @@ if(productoElegido === "Tinto")
 
     
 
-//Menu
-let menu =parseInt(prompt("Elige una opcion"));
-
-switch (menu) {
-    case 1:
-        alert("Tinto");
-      totalPedido = tintoPrecio;
-      console.log("tintoAgua")
-
-//este calcula cuánto cuesta el pedido cuando eligieron tinto.
-if (productoElegido === "tinto") {
-  totalPedido = tintoPrecio;
-}
-  if (conAzucar === true) {
-    totalPedido = totalPedido + precioAzucar;
-    
-  }
-        break;
-        case 2:
-         alert("Americano");
-      totalPedido = americanoPrecio;
-      console.log("americano")
-
-      break;
-        case 3:
-         alert("Cafe con leche");
-      totalPedido = cafeConLechePrecio;
-      console.log("Cafe con leche")
-
-      break;
-        case 4:
-         alert("Capuchino");
-      totalPedido = capuchinoPrecio;
-      console.log("Capuchino")
-
-      break;
-        case 5:
-         alert("Te");
-      totalPedido = tintoPrecio;
-      console.log("Te")
-
-    default:
-        break;
-}
 
 
 
