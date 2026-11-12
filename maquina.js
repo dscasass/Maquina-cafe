@@ -54,34 +54,23 @@ const teAgua = 150;
 const teCapacidad = 150;             // 150 de agua
 
 // Lo que hace el usuario (ejemplo de un pedido)
-let dineroIngresado = 20000;       // plata que mete: un billete de 20000 ($)
-let productoElegido = "capuchino"; // producto que escoge
-let conAzucar = true;              // si quiere azucar o no
+let productoElegido = "";  // producto que escoge
+let conAzucar = false;     // si quiere azucar o no
+let dineroIngresado = 0;   // plata que mete ($)
 
-// Salidas
-let totalPedido = 0;      // lo que cuesta el pedido ($)
-let cambio = 0;           // plata que se devuelve ($)
-let productoServido = ""; // cafe o te
-let contenidoVaso = 0;    // lo que lleva el vaso servido (ml)
-let mensaje = "";         // saldo insuficiente, producto agotado, no hay cambio o finalizado
+// SALIDAS 
+let totalPedido = 0;       // lo que cuesta el pedido ($)
+let cambio = 0;            // plata que se devuelve ($)
+let productoServido = "";  // cafe o te
+let contenidoVaso = 0;     // lo que lleva el vaso servido (ml)
 
-// Cambio: cuantos billetes y monedas se entregan de cada denominacion (unidades)
-let sumaEntregada = 0;    // lo que llevamos sumado del cambio ($)
-let faltaPorDar = 0;      // lo que falta para llegar al cambio ($)
-let entregaBilletes20000 = 0;
-let entregaBilletes10000 = 0;
-let entregaBilletes5000 = 0;
-let entregaBilletes2000 = 0;
-let entregaMonedas1000 = 0;
-let entregaMonedas500 = 0;
-let entregaMonedas200 = 0;
-let entregaMonedas100 = 0;
-
-
-
+// LO QUE NECESITA CADA PEDIDO 
 let cafeNecesario = 0;
-let aguaNecesaria = 0 ;
-let lecheNecesaria = 0 ;
+let aguaNecesaria = 0;
+let lecheNecesaria = 0;
+let teNecesario = 0;
+
+
 
 
 //cambio money money
@@ -143,10 +132,9 @@ function darCambio(cambio) {
 }
 
 
+
  // 1. Elegir producto
-  productoElegido = prompt(
-    "Seleccione un producto:\n1. Tinto\n2. Americano\n3. Cafe con leche\n4. Capuchino\n5. Te\n0. Apagar"
-  );
+productoElegido = prompt("Seleccione un producto:\n1. Tinto\n2. Americano\n3. Cafe con leche\n4. Capuchino\n5. Te\n0. Apagar");
 
   switch (productoElegido) {
 
@@ -156,6 +144,7 @@ function darCambio(cambio) {
       cafeNecesario = tintoCafe;
       aguaNecesaria = tintoAgua;
       productoServido = "cafe";
+      console.log("Tinto")
       break;
 
     case "2":
@@ -164,6 +153,7 @@ function darCambio(cambio) {
       cafeNecesario = americanoCafe;
       aguaNecesaria = americanoAgua;
       productoServido = "cafe";
+      console.log("Americano")
       break;
 
     case "3":
@@ -173,6 +163,7 @@ function darCambio(cambio) {
       aguaNecesaria = cafeConLecheAgua;
       lecheNecesaria = cafeConLecheLeche;
       productoServido = "cafe";
+      console.log("Cafe con leche")
       break;
 
     case "4":
@@ -182,6 +173,7 @@ function darCambio(cambio) {
       aguaNecesaria = capuchinoAgua;
       lecheNecesaria = capuchinoLeche;
       productoServido = "cafe";
+      console.log("Capuchino")
       break;
 
     case "5":
@@ -190,6 +182,7 @@ function darCambio(cambio) {
       teNecesario = teCantidad;
       aguaNecesaria = teAgua;
       productoServido = "te";
+      console.log("Te")
       break;
 
     case "0":
@@ -199,13 +192,14 @@ function darCambio(cambio) {
 
     default:
       alert("Producto no valido");
+      console.log("no valido")
   }
 
   // Solo sigue si escogio un producto
   if (totalPedido > 0) {
 
     alert("Procesando pedido...");
-
+  }
 
 if (
   cafe < cafeNecesario ||
