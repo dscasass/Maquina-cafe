@@ -1,6 +1,3 @@
-
-
-
 // Inventario de productos
 let saldo = 0;    // plata que lleva metida el usuario ($)
 let cafe = 500;   // gramos (g)
@@ -85,6 +82,69 @@ let entregaMonedas100 = 0;
 let cafeNecesario = 0;
 let aguaNecesaria = 0 ;
 let lecheNecesaria = 0 ;
+
+
+//cambio money money
+
+function darCambio(cambio) {
+  let b20000 = 0;
+  let b10000 = 0;
+  let b5000 = 0;
+  let b2000 = 0;
+  let m1000 = 0;
+  let m500 = 0;
+  let m200 = 0;
+  let m100 = 0;
+
+  while (cambio >= 20000) {
+    cambio = cambio - 20000;
+    b20000 = b20000 + 1;
+  }
+  while (cambio >= 10000) {
+    cambio = cambio - 10000;
+    b10000 = b10000 + 1;
+  }
+  while (cambio >= 5000) {
+    cambio = cambio - 5000;
+    b5000 = b5000 + 1;
+  }
+  while (cambio >= 2000) {
+    cambio = cambio - 2000;
+    b2000 = b2000 + 1;
+  }
+  while (cambio >= 1000) {
+    cambio = cambio - 1000;
+    m1000 = m1000 + 1;
+  }
+  while (cambio >= 500) {
+    cambio = cambio - 500;
+    m500 = m500 + 1;
+  }
+  while (cambio >= 200) {
+    cambio = cambio - 200;
+    m200 = m200 + 1;
+  }
+  while (cambio >= 100) {
+    cambio = cambio - 100;
+    m100 = m100 + 1;
+  }
+
+  alert(
+    "Su cambio:" +
+    b20000 + " billetes de 20000" +
+    b10000 + " billetes de 10000" +
+    b5000 + " billetes de 5000" +
+    b2000 + " billetes de 2000" +
+    m1000 + " monedas de 1000" +
+    m500 + " monedas de 500" +
+    m200 + " monedas de 200" +
+    m100 + " monedas de 100"
+  );
+}
+
+
+
+
 
 productoElegido = prompt(
   "Seleccione un producto: Tinto, Americano, Cafe con leche, Capuchino o Te"
