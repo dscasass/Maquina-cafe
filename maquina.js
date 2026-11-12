@@ -118,16 +118,6 @@ function darCambio(cambio) {
   }
 
   alert(
-    "Su cambio:" +
-    b20000 + " billetes de 20000" +
-    b10000 + " billetes de 10000" +
-    b5000 + " billetes de 5000" +
-    b2000 + " billetes de 2000" +
-    m1000 + " monedas de 1000" +
-    m500 + " monedas de 500" +
-    m200 + " monedas de 200" +
-    m100 + " monedas de 100" +
-    
     "Total devuelto: $" + totalCambio
     
   );
@@ -245,7 +235,7 @@ productoElegido = prompt("Seleccione un producto:\n1. Tinto\n2. Americano\n3. Ca
       dineroIngresado = parseInt(prompt("Ingrese el dinero (maximo $20000)"));
 
       while (isNaN(dineroIngresado) || dineroIngresado > 20000) {
-        alert("Solo se aceptan billetes hasta $20000");
+        alert("Solo se aceptan billetes hasta $20000 (⊙_☉)");
         dineroIngresado = parseInt(prompt("Ingrese el dinero (maximo $20000)"));
       }
 
