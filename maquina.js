@@ -240,8 +240,16 @@ productoElegido = prompt("Seleccione un producto:\n1. Tinto\n2. Americano\n3. Ca
       }
 
       // 4. Cobrar
+      //Primero dice no billetes mas alla de 20
       alert("Debe pagar: $" + totalPedido);
-      dineroIngresado = parseInt(prompt("Ingrese el dinero"));
+      dineroIngresado = parseInt(prompt("Ingrese el dinero (maximo $20000)"));
+
+      while (isNaN(dineroIngresado) || dineroIngresado > 20000) {
+        alert("Solo se aceptan billetes hasta $20000");
+        dineroIngresado = parseInt(prompt("Ingrese el dinero (maximo $20000)"));
+      }
+
+      //sigue proceso normal
 
       if (dineroIngresado >= totalPedido) {
 
