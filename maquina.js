@@ -71,11 +71,10 @@ let lecheNecesaria = 0;
 let teNecesario = 0;
 
 
-
-
-//cambio money money
-
+// cambio money money
 function darCambio(cambio) {
+  let totalCambio = cambio;
+
   let b20000 = 0;
   let b10000 = 0;
   let b5000 = 0;
@@ -127,10 +126,30 @@ function darCambio(cambio) {
     m1000 + " monedas de 1000" +
     m500 + " monedas de 500" +
     m200 + " monedas de 200" +
-    m100 + " monedas de 100"
+    m100 + " monedas de 100" +
+    
+    "Total devuelto: $" + totalCambio
+    
   );
 }
 
+
+// Se repite hasta que escriban 0
+let seguir = true;
+
+while (seguir) {
+
+  // Todo empieza desde 0
+  totalPedido = 0;
+  cambio = 0;
+  dineroIngresado = 0;
+  conAzucar = false;
+  productoServido = "";
+  contenidoVaso = 0;
+  cafeNecesario = 0;
+  aguaNecesaria = 0;
+  lecheNecesaria = 0;
+  teNecesario = 0;
 
 
  // 1. Elegir producto
@@ -196,10 +215,74 @@ productoElegido = prompt("Seleccione un producto:\n1. Tinto\n2. Americano\n3. Ca
   }
 
   // Solo sigue si escogio un producto
+  // Solo sigue si escogio un producto
   if (totalPedido > 0) {
 
     alert("Procesando pedido...");
+
+    // 2. Revisar que haya ingredientes
+    if (cafe < cafeNecesario || te < teNecesario || agua < aguaNecesaria || leche < lecheNecesaria || vasos < 1) {
+
+      alert("Producto agotado");
+
+    } else {
+
+      // 3. Azucar
+      conAzucar = confirm("¿Desea añadir azucar? (+$" + precioAzucar + ")");
+
+      if (conAzucar === true) {
+        if (azucar >= azucarPorPorcion) {
+          totalPedido = totalPedido + precioAzucar;
+        } else {
+          alert("No hay azucar suficiente");
+          conAzucar = false;
+        }
+      }
+
+      // 4. Cobrar
+      alert("Debe pagar: $" + totalPedido);
+      dineroIngresado = parseInt(prompt("Ingrese el dinero"));
+
+      if (dineroIngresado >= totalPedido) {
+
+        // 5. Servir: se gasta el inventario
+        cafe = cafe - cafeNecesario;
+        te = te - teNecesario;
+        agua = agua - aguaNecesaria;
+        leche = leche - lecheNecesaria;
+        vasos = vasos - 1;
+
+        if (conAzucar === true) {
+          azucar = azucar - azucarPorPorcion;
+        }
+
+        contenidoVaso = aguaNecesaria + lecheNecesaria;
+        alert("Su " + productoServido + " esta listo: " + contenidoVaso + " ml");
+
+        // 6. Vueltas
+        cambio = dineroIngresado - totalPedido;
+
+        if (cambio > 0) {
+          darCambio(cambio);
+        }
+
+        alert("Pedido terminado");
+
+      } else {
+
+        alert("Dinero insuficiente. Pedido cancelado");
+
+      }
+    }
   }
+
+
+
+
+
+
+
+  
 
 if (
   cafe < cafeNecesario ||
@@ -215,6 +298,12 @@ if (
   mensaje = "Hay ingredientes suficientes :(";
 
 }
+
+
+
+
+
+
 
 
 
@@ -237,24 +326,6 @@ function calcularDinero() {
 
 
 
-
-if (mensaje === "Hay ingredientes suficientes") {
-
-  conAzucar = anadirAzucar();
-
-  if (conAzucar === true) {
-
-    if (azucar >= azucarPorPorcion) {
-
-      totalPedido = totalPedido + precioAzucar;
-
-    } else {
-
-      mensaje = "No hay azucar suficiente";
-
-    }
-
-  }
 
   //ingredientes
 
