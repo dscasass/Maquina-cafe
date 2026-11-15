@@ -146,10 +146,15 @@ function darCambio(cambio) {
   if (m200 > 0)   { console.log(m200 + " moneda(s) de $200"); }
   if (m100 > 0)   { console.log(m100 + " moneda(s) de $100"); }
 
-  // si algo no se pudo dar (solo consola)
+  // si algo no se pudo dar
   if (cambio > 0) {
     console.log("No hay monedas/billetes para dar $" + cambio);
+    alert("No hay cambio suficiente. Se devolvieron $" + (totalCambio - cambio));
+  } else {
+    // Lo que ve el user
+    alert("Se devolvieron $" + totalCambio + " de cambio");
   }
+
 
   // LO QUE VE EL USUARIO: solo el total
   alert("Se devolvieron $" + totalCambio + " de cambio");
@@ -295,6 +300,8 @@ productoElegido = prompt("Seleccione un producto:\n1. Tinto\n2. Americano\n3. Ca
 
         if (cambio > 0) {
           darCambio(cambio);
+        } else {
+          alert("Pago exacto, no hay cambio");
         }
 
         alert("Pedido terminado");
@@ -306,7 +313,6 @@ productoElegido = prompt("Seleccione un producto:\n1. Tinto\n2. Americano\n3. Ca
       }
     }
   }
-
 
 
 
