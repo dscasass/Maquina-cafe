@@ -1,3 +1,11 @@
+const nombres = ["Tinto", "Americano", "Cafe con leche", "Capuchino", "Te"];
+const precios = [2000, 4000, 3000, 5000, 1800];
+const cafes   = [2, 3, 2, 3, 0];
+const leches  = [0, 0, 50, 60, 0];
+const aguas   = [150, 150, 100, 90, 150];
+const tes     = [0, 0, 0, 0, 2];
+
+
 // Inventario de productos
 let saldo = 0;    // plata que lleva metida el usuario ($)
 let cafe = 500;   // gramos (g)
@@ -21,7 +29,7 @@ let billetes10000 = 5;
 let billetes20000 = 5;
 
 // Azucar
-const precioAzucar = 200;   // lo que cuesta pedirla ($)
+const precioAzucar = 500;   // lo que cuesta pedirla ($)
 const azucarPorPorcion = 5; // lo que se gasta (g)
 
 // Recetas: precio en $, cafe y te en g, leche y agua en ml
@@ -31,7 +39,7 @@ const tintoCafe = 2;
 const tintoAgua = 150;
 const tintoCapacidad = 150;          // 150 de agua
 
-const americanoPrecio = 2500;
+const americanoPrecio = 4000;
 const americanoCafe = 3;
 const americanoAgua = 150;
 const americanoCapacidad = 150;      // 150 de agua
@@ -42,7 +50,7 @@ const cafeConLecheLeche = 50;
 const cafeConLecheAgua = 100;
 const cafeConLecheCapacidad = 150;   // 50 de leche + 100 de agua
 
-const capuchinoPrecio = 3500;
+const capuchinoPrecio = 5000;
 const capuchinoCafe = 3;
 const capuchinoLeche = 60;
 const capuchinoAgua = 90;
@@ -84,44 +92,69 @@ function darCambio(cambio) {
   let m200 = 0;
   let m100 = 0;
 
-  while (cambio >= 20000) {
+  while (cambio >= 20000 && billetes20000 > 0) {
     cambio = cambio - 20000;
+    billetes20000 = billetes20000 - 1;
     b20000 = b20000 + 1;
   }
-  while (cambio >= 10000) {
+  while (cambio >= 10000 && billetes10000 > 0) {
     cambio = cambio - 10000;
+    billetes10000 = billetes10000 - 1;
     b10000 = b10000 + 1;
   }
-  while (cambio >= 5000) {
+  while (cambio >= 5000 && billetes5000 > 0) {
     cambio = cambio - 5000;
+    billetes5000 = billetes5000 - 1;
     b5000 = b5000 + 1;
   }
-  while (cambio >= 2000) {
+  while (cambio >= 2000 && billetes2000 > 0) {
     cambio = cambio - 2000;
+    billetes2000 = billetes2000 - 1;
     b2000 = b2000 + 1;
   }
-  while (cambio >= 1000) {
+  while (cambio >= 1000 && monedas1000 > 0) {
     cambio = cambio - 1000;
+    monedas1000 = monedas1000 - 1;
     m1000 = m1000 + 1;
   }
-  while (cambio >= 500) {
+  while (cambio >= 500 && monedas500 > 0) {
     cambio = cambio - 500;
+    monedas500 = monedas500 - 1;
     m500 = m500 + 1;
   }
-  while (cambio >= 200) {
+  while (cambio >= 200 && monedas200 > 0) {
     cambio = cambio - 200;
+    monedas200 = monedas200 - 1;
     m200 = m200 + 1;
   }
-  while (cambio >= 100) {
+  while (cambio >= 100 && monedas100 > 0) {
     cambio = cambio - 100;
+    monedas100 = monedas100 - 1;
     m100 = m100 + 1;
+
+}
+
+
+  // PROCESO INTERNO
+  console.log("Total devuelto: $" + totalCambio);
+  if (b20000 > 0) { console.log(b20000 + " billete(s) de $20000"); }
+  if (b10000 > 0) { console.log(b10000 + " billete(s) de $10000"); }
+  if (b5000 > 0)  { console.log(b5000 + " billete(s) de $5000"); }
+  if (b2000 > 0)  { console.log(b2000 + " billete(s) de $2000"); }
+  if (m1000 > 0)  { console.log(m1000 + " moneda(s) de $1000"); }
+  if (m500 > 0)   { console.log(m500 + " moneda(s) de $500"); }
+  if (m200 > 0)   { console.log(m200 + " moneda(s) de $200"); }
+  if (m100 > 0)   { console.log(m100 + " moneda(s) de $100"); }
+
+  // si algo no se pudo dar (solo consola)
+  if (cambio > 0) {
+    console.log("No hay monedas/billetes para dar $" + cambio);
   }
 
-  alert(
-    "Total devuelto: $" + totalCambio
-    
-  );
+  // LO QUE VE EL USUARIO: solo el total
+  alert("Se devolvieron $" + totalCambio + " de cambio");
 }
+
 
 
 // Se repite hasta que escriban 0
@@ -235,7 +268,7 @@ productoElegido = prompt("Seleccione un producto:\n1. Tinto\n2. Americano\n3. Ca
       dineroIngresado = parseInt(prompt("Ingrese el dinero (maximo $20000)"));
 
       while (isNaN(dineroIngresado) || dineroIngresado > 20000) {
-        alert("Solo se aceptan billetes hasta $20000 (⊙_☉)");
+        alert("Solo se aceptan billetes hasta $20000 (ಠ_ರೃ)");
         dineroIngresado = parseInt(prompt("Ingrese el dinero (maximo $20000)"));
       }
 
