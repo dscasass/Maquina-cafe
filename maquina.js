@@ -1,10 +1,3 @@
-const nombres = ["Tinto", "Americano", "Cafe con leche", "Capuchino", "Te"];
-const precios = [2000, 4000, 3000, 5000, 1800];
-const cafes   = [2, 3, 2, 3, 0];
-const leches  = [0, 0, 50, 60, 0];
-const aguas   = [150, 150, 100, 90, 150];
-const tes     = [0, 0, 0, 0, 2];
-
 
 // Inventario de productos
 let saldo = 0;    // plata que lleva metida el usuario ($)
@@ -421,7 +414,7 @@ if(productoElegido === "Tinto")
 
 
 
-
+/*
 // Ejemplo: capuchino con azucar, pagando con un billete de 20000
 totalPedido = capuchinoPrecio;
 totalPedido = totalPedido + precioAzucar;
@@ -477,3 +470,4 @@ monedas200 = monedas200 - entregaMonedas200;
 monedas100 = monedas100 - entregaMonedas100;
 
 mensaje = "Finalizado";
+*/
