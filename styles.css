@@ -1,14 +1,14 @@
 :root {
   /* Variables de Color */
-  --gray-050: #f5f5f5; /*titulos*/
+  --gray-050: #cfd5ff; /*titulos*/
   --gray-100: #e8e8e8; /*Menus y saldo*/
   --gray-200: #d4d4d4; /*botones maquinas y fondos*/
   --gray-300: #bdbdbd; /*fondo del menú y botón abonar*/
   --gray-400: #ffffff; /*color de los textos claros o letras*/
   --gray-500: #7a7a7a; /*borones y boton cambio*/
   --gray-600: #000000; /*bordes y fondos o el 123 del stock*/
-  --gray-700: #835e5e; /*cancelar*/
-  --gray-800: #583232; /* color de la máquina*/
+  --gray-700: #635e83; /*cancelar*/
+  --gray-800: #353258; /* color de la máquina*/
   --gray-900: #141414; /*bordes*/
 
   /* Colores semánticos */
