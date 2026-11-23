@@ -111,5 +111,30 @@ agua + leche = 150 ml.
 15. Al devolver cambio, la maquina arma el cambio con billetes y monedas, empezando por el mas grande (20000, 10000, 5000, 2000, 1000, 500, 200 y 100). Se usa una denominacion mientras quepa en lo que falta y mientras haya en el inventario. Por ejemplo, para un cambio de $15800: 10000 + 5000 + 500 + 200 + 100 = 15800
     - Se lleva la cuenta de cuantos billetes y monedas de cada denominacion se usaron
 16. La maquina resta del inventario los billetes y monedas entregados y muestra el total devuelto (el detalle sale por consola)
+=======
+1. Se declaran las cosas que hay en la maquina: cafe, leche, agua, te, azucar y vasos, con sus cantidades
+2. Se declaran los billetes y monedas que tiene la maquina para dar cambio
+3. Se declaran los precios y lo que lleva cada producto, y el precio del azucar
+4. Se pone el saldo en 0 y se muestra en la pantalla. En la vitrina se muestra cuantos hay de cada producto
+5. El usuario escribe cuanta plata mete y da clic en Abonar
+    - Si el valor no sirve o es mayor a $20000, la maquina avisa y no lo recibe
+    - Si sirve, se suma al saldo y se actualiza la pantalla
+6. El usuario da clic en un numero del 1 al 5 para escoger el producto
+7. La maquina mira que producto es y guarda su nombre, su precio y lo que necesita
+8. La maquina revisa que haya suficiente cafe, te, leche, agua y minimo 1 vaso
+    - Si falta algo, avisa "Producto agotado" y vuelve al paso 5
+9. La maquina pregunta si quiere azucar
+    - Si dice que si y hay azucar, se suman $500 al total
+    - Si no hay azucar, avisa y sigue sin ella
+10. La maquina mira si el saldo alcanza para pagar el total
+    - Si no alcanza, avisa "Saldo insuficiente" y el usuario puede abonar mas (paso 5)
+    - Si alcanza, sigue
+11. La maquina cobra: le resta el total al saldo y gasta del inventario lo que lleva el pedido (ingredientes, vaso y azucar si la pidio)
+12. Sale el producto en el dispensador con su imagen
+13. Se actualizan el saldo en la pantalla y el stock de la vitrina
+14. Ahora el usuario puede pedir otro producto con el saldo que le queda (paso 6), abonar mas (paso 5) o dar clic en Devolver cambio (o en la X)
+15. Para devolver el cambio, la maquina empieza con el billete o moneda mas grande (20000, 10000, 5000, 2000, 1000, 500, 200 y 100). Va dando de ese valor mientras todavia quepa en lo que falta devolver y mientras haya en la maquina. Despues pasa al siguiente. Por ejemplo, para $15800: 10000 + 5000 + 500 + 200 + 100 = 15800
+    - Va contando cuantos billetes y monedas da de cada uno
+16. La maquina descuenta de su inventario los billetes y monedas que dio y le muestra al usuario el total devuelto (el detalle sale por la consola)
     - Si no alcanzaron los billetes y monedas, avisa "No hay cambio suficiente" y lo que falta se queda como saldo
 17. El saldo se actualiza (queda en 0 si se devolvio todo) y la maquina queda lista para otro usuario (vuelve al paso 5)
