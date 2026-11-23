@@ -1,24 +1,14 @@
-const nombres = ["Tinto", "Americano", "Cafe con leche", "Capuchino", "Te"];
-const precios = [2000, 4000, 3000, 5000, 1800];
-const cafes   = [2, 3, 2, 3, 0];
-const leches  = [0, 0, 50, 60, 0];
-const aguas   = [150, 150, 100, 90, 150];
-const tes     = [0, 0, 0, 0, 2];
 
+//  Inventario 
+let saldo = 0;      // plata que lleva metida el usuario ($)
+let cafe = 500;     // g
+let leche = 2000;   // ml
+let agua = 5000;    // ml
+let te = 100;       // g
+let azucar = 300;   // g
+let vasos = 30;     // unidades
 
-// Inventario de productos
-let saldo = 0;    // plata que lleva metida el usuario ($)
-let cafe = 500;   // gramos (g)
-let leche = 2000; // mililitros (ml)
-let agua = 5000;  // mililitros (ml)
-let te = 100;     // gramos (g)
-let azucar = 300; // gramos (g)
-
-// Vaso (un solo tipo)
-let vasos = 30;                // unidades disponibles
-const capacidadVaso = 150;     // lo que le cabe al vaso (ml)
-
-// Monedas y billetes que hay para dar cambio (unidades)
+//  Monedas y billetes para dar cambio 
 let monedas1000 = 20;
 let monedas500 = 20;
 let monedas200 = 20;
@@ -28,58 +18,129 @@ let billetes5000 = 10;
 let billetes10000 = 5;
 let billetes20000 = 5;
 
-// Azucar
-const precioAzucar = 500;   // lo que cuesta pedirla ($)
-const azucarPorPorcion = 5; // lo que se gasta (g)
+//  Azucar 
+const precioAzucar = 500;
+const azucarPorPorcion = 5;
 
-// Recetas: precio en $, cafe y te en g, leche y agua en ml
-// "Capacidad" = lo que lleva el vaso de ese producto segun la receta (ml)
+//  Recetas (el orden de los numeros es el del index.html)
+// 1 Tinto, 2 Americano, 3 Cafe con leche, 4 Capuchino, 5 Te
 const tintoPrecio = 2000;
 const tintoCafe = 2;
 const tintoAgua = 150;
-const tintoCapacidad = 150;          // 150 de agua
-
-const americanoPrecio = 4000;
-const americanoCafe = 3;
-const americanoAgua = 150;
-const americanoCapacidad = 150;      // 150 de agua
-
-const cafeConLechePrecio = 3000;
-const cafeConLecheCafe = 2;
-const cafeConLecheLeche = 50;
-const cafeConLecheAgua = 100;
-const cafeConLecheCapacidad = 150;   // 50 de leche + 100 de agua
 
 const capuchinoPrecio = 5000;
 const capuchinoCafe = 3;
 const capuchinoLeche = 60;
 const capuchinoAgua = 90;
-const capuchinoCapacidad = 150;      // 60 de leche + 90 de agua
+
+const americanoPrecio = 4000;
+const americanoCafe = 3;
+const americanoAgua = 150;
+
+const cafeConLechePrecio = 3000;
+const cafeConLecheCafe = 2;
+const cafeConLecheLeche = 50;
+const cafeConLecheAgua = 100;
 
 const tePrecio = 1800;
 const teCantidad = 2;
 const teAgua = 150;
-const teCapacidad = 150;             // 150 de agua
 
-// Lo que hace el usuario (ejemplo de un pedido)
-let productoElegido = "";  // producto que escoge
-let conAzucar = false;     // si quiere azucar o no
-let dineroIngresado = 0;   // plata que mete ($)
-
-// SALIDAS 
-let totalPedido = 0;       // lo que cuesta el pedido ($)
-let cambio = 0;            // plata que se devuelve ($)
-let productoServido = "";  // cafe o te
-let contenidoVaso = 0;     // lo que lleva el vaso servido (ml)
-
-// LO QUE NECESITA CADA PEDIDO 
+//  Lo que se necesita en cada pedido 
+let nombreProducto = "";
+let totalPedido = 0;
 let cafeNecesario = 0;
 let aguaNecesaria = 0;
 let lecheNecesaria = 0;
 let teNecesario = 0;
+let productoServido = "";
+let contenidoVaso = 0;
+let imagenProducto = "";   // nombre de la imagen que sale en el dispensador
+
+//  Elementos del HTML (con id) 
+const pantallaSaldo = document.getElementById("credit");
+const formulario = document.getElementById("balance-form");
+const inputDinero = document.getElementById("balance-input");
+const dispensador = document.getElementById("dispenser");
+const salidaBilletes = document.getElementById("bill-output");
+const salidaMonedas = document.getElementById("coin-output");
 
 
-// cambio money money
+
+
+// Muestra el saldo en la pantalla de la maquina
+function mostrarSaldo() {
+  pantallaSaldo.textContent = "$" + saldo;
+}
+
+// Cuantos pedidos se pueden hacer con lo que hay (restando, sin Math.floor)
+function cuantosAlcanzan(disponible, necesario) {
+  let cantidad = 0;
+  if (necesario === 0) {
+    return vasos;
+  }
+  while (disponible >= necesario) {
+    disponible = disponible - necesario;
+    cantidad = cantidad + 1;
+  }
+  if (cantidad > vasos) {
+    cantidad = vasos;
+  }
+  return cantidad;
+}
+
+// Pone el stock en cada estante de la vitrina
+function mostrarStock() {
+  let stock1 = cuantosAlcanzan(cafe, tintoCafe);
+  let stock2 = cuantosAlcanzan(cafe, americanoCafe);
+  let stock3 = cuantosAlcanzan(cafe, cafeConLecheCafe);
+  let stock4 = cuantosAlcanzan(cafe, capuchinoCafe);
+  let stock5 = cuantosAlcanzan(te, teCantidad);
+
+  // Ademas del cafe, tambien limitan el agua y la leche
+  if (cuantosAlcanzan(agua, tintoAgua) < stock1) { stock1 = cuantosAlcanzan(agua, tintoAgua); }
+  if (cuantosAlcanzan(agua, americanoAgua) < stock2) { stock2 = cuantosAlcanzan(agua, americanoAgua); }
+  if (cuantosAlcanzan(agua, cafeConLecheAgua) < stock3) { stock3 = cuantosAlcanzan(agua, cafeConLecheAgua); }
+  if (cuantosAlcanzan(leche, cafeConLecheLeche) < stock3) { stock3 = cuantosAlcanzan(leche, cafeConLecheLeche); }
+  if (cuantosAlcanzan(agua, capuchinoAgua) < stock4) { stock4 = cuantosAlcanzan(agua, capuchinoAgua); }
+  if (cuantosAlcanzan(leche, capuchinoLeche) < stock4) { stock4 = cuantosAlcanzan(leche, capuchinoLeche); }
+  if (cuantosAlcanzan(agua, teAgua) < stock5) { stock5 = cuantosAlcanzan(agua, teAgua); }
+
+  document.querySelector('[data-product="1"] .shelf__stock b').textContent = stock1;
+  document.querySelector('[data-product="2"] .shelf__stock b').textContent = stock2;
+  document.querySelector('[data-product="3"] .shelf__stock b').textContent = stock3;
+  document.querySelector('[data-product="4"] .shelf__stock b').textContent = stock4;
+  document.querySelector('[data-product="5"] .shelf__stock b').textContent = stock5;
+
+  // Si no queda, el CSS lo pone gris con la clase is-empty
+  document.querySelector('[data-product="1"]').classList.toggle("is-empty", stock1 === 0);
+  document.querySelector('[data-product="2"]').classList.toggle("is-empty", stock2 === 0);
+  document.querySelector('[data-product="3"]').classList.toggle("is-empty", stock3 === 0);
+  document.querySelector('[data-product="4"]').classList.toggle("is-empty", stock4 === 0);
+  document.querySelector('[data-product="5"]').classList.toggle("is-empty", stock5 === 0);
+}
+
+// Muestra texto dentro de una salida (billetes o monedas)
+function mostrarEnSalida(salida, texto) {
+  salida.textContent = texto;
+  salida.style.height = "auto";
+  salida.style.padding = "4px 6px";
+  salida.style.color = "white";
+  salida.style.fontSize = "0.75rem";
+  salida.style.fontWeight = "bold";
+  salida.style.whiteSpace = "pre-line";
+  salida.style.cursor = "pointer";
+}
+
+// Deja la salida vacia otra vez (como estaba en el CSS)
+function vaciarSalida(salida) {
+  salida.textContent = "";
+  salida.style.height = "";
+  salida.style.padding = "";
+  salida.style.cursor = "";
+}
+
+// Devuelve plata: arma el cambio con billetes y monedas (while restando)
 function darCambio(cambio) {
   let totalCambio = cambio;
 
@@ -131,12 +192,10 @@ function darCambio(cambio) {
     cambio = cambio - 100;
     monedas100 = monedas100 - 1;
     m100 = m100 + 1;
+  }
 
-}
-
-
-  // PROCESO INTERNO
-  console.log("Total devuelto: $" + totalCambio);
+  // PROCESO INTERNO (solo consola)
+  console.log("Total devuelto: $" + (totalCambio - cambio));
   if (b20000 > 0) { console.log(b20000 + " billete(s) de $20000"); }
   if (b10000 > 0) { console.log(b10000 + " billete(s) de $10000"); }
   if (b5000 > 0)  { console.log(b5000 + " billete(s) de $5000"); }
@@ -146,334 +205,202 @@ function darCambio(cambio) {
   if (m200 > 0)   { console.log(m200 + " moneda(s) de $200"); }
   if (m100 > 0)   { console.log(m100 + " moneda(s) de $100"); }
 
-  // si algo no se pudo dar
+  // LO QUE VE EL USUARIO: el cambio sale por las salidas de la maquina
+  let textoBilletes = "";
+  let textoMonedas = "";
+
+  if (b20000 > 0) { textoBilletes = textoBilletes + b20000 + " x $20000\n"; }
+  if (b10000 > 0) { textoBilletes = textoBilletes + b10000 + " x $10000\n"; }
+  if (b5000 > 0)  { textoBilletes = textoBilletes + b5000 + " x $5000\n"; }
+  if (b2000 > 0)  { textoBilletes = textoBilletes + b2000 + " x $2000\n"; }
+  if (m1000 > 0)  { textoMonedas = textoMonedas + m1000 + " x $1000\n"; }
+  if (m500 > 0)   { textoMonedas = textoMonedas + m500 + " x $500\n"; }
+  if (m200 > 0)   { textoMonedas = textoMonedas + m200 + " x $200\n"; }
+  if (m100 > 0)   { textoMonedas = textoMonedas + m100 + " x $100\n"; }
+
+  vaciarSalida(salidaBilletes);
+  vaciarSalida(salidaMonedas);
+
+  if (textoBilletes !== "") {
+    mostrarEnSalida(salidaBilletes, textoBilletes);
+  }
+  if (textoMonedas !== "") {
+    mostrarEnSalida(salidaMonedas, textoMonedas);
+  }
+
   if (cambio > 0) {
     console.log("No hay monedas/billetes para dar $" + cambio);
     alert("No hay cambio suficiente. Se devolvieron $" + (totalCambio - cambio));
-  } else {
-    // Lo que ve el user
-    alert("Se devolvieron $" + totalCambio + " de cambio");
   }
 
-
-  // LO QUE VE EL USUARIO: solo el total
-  alert("Se devolvieron $" + totalCambio + " de cambio");
+  // Lo que no se pudo devolver se queda como saldo
+  saldo = cambio;
+  mostrarSaldo();
 }
 
-
-
-// Se repite hasta que escriban 0
-let seguir = true;
-
-while (seguir) {
+// Se llama cuando el usuario toca un numero (1 a 5)
+function pedirProducto(codigo) {
 
   // Todo empieza desde 0
   totalPedido = 0;
-  cambio = 0;
-  dineroIngresado = 0;
-  conAzucar = false;
-  productoServido = "";
-  contenidoVaso = 0;
   cafeNecesario = 0;
   aguaNecesaria = 0;
   lecheNecesaria = 0;
   teNecesario = 0;
+  productoServido = "";
+  contenidoVaso = 0;
 
+  // 1. Elegir producto
+  switch (codigo) {
 
- // 1. Elegir producto
-productoElegido = prompt("Seleccione un producto:\n1. Tinto\n2. Americano\n3. Cafe con leche\n4. Capuchino\n5. Te\n0. Apagar");
-
-  switch (productoElegido) {
-
-    case "1":
-      alert("Tinto - Precio: $" + tintoPrecio);
+    case 1:
+      nombreProducto = "Tinto";
+      imagenProducto = "tinto.svg";
       totalPedido = tintoPrecio;
       cafeNecesario = tintoCafe;
       aguaNecesaria = tintoAgua;
       productoServido = "cafe";
-      console.log("Tinto")
       break;
 
-    case "2":
-      alert("Americano - Precio: $" + americanoPrecio);
+    case 2:
+      nombreProducto = "Americano";
+      imagenProducto = "americano.svg";
       totalPedido = americanoPrecio;
       cafeNecesario = americanoCafe;
       aguaNecesaria = americanoAgua;
       productoServido = "cafe";
-      console.log("Americano")
       break;
 
-    case "3":
-      alert("Cafe con leche - Precio: $" + cafeConLechePrecio);
+    case 3:
+      nombreProducto = "Cafe con leche";
+      imagenProducto = "cafe-con-leche.svg";
       totalPedido = cafeConLechePrecio;
       cafeNecesario = cafeConLecheCafe;
       aguaNecesaria = cafeConLecheAgua;
       lecheNecesaria = cafeConLecheLeche;
       productoServido = "cafe";
-      console.log("Cafe con leche")
       break;
 
-    case "4":
-      alert("Capuchino - Precio: $" + capuchinoPrecio);
+    case 4:
+      nombreProducto = "Capuchino";
+      imagenProducto = "capuchino.svg";
       totalPedido = capuchinoPrecio;
       cafeNecesario = capuchinoCafe;
       aguaNecesaria = capuchinoAgua;
       lecheNecesaria = capuchinoLeche;
       productoServido = "cafe";
-      console.log("Capuchino")
       break;
 
-    case "5":
-      alert("Te - Precio: $" + tePrecio);
+    case 5:
+      nombreProducto = "Te";
+      imagenProducto = "te.svg";
       totalPedido = tePrecio;
       teNecesario = teCantidad;
       aguaNecesaria = teAgua;
       productoServido = "te";
-      console.log("Te")
       break;
-
-    case "0":
-    case null:
-      seguir = false;
-      break;
-
-    default:
-      alert("Producto no valido");
-      console.log("no valido")
   }
 
-  // Solo sigue si escogio un producto
-  // Solo sigue si escogio un producto
-  if (totalPedido > 0) {
+  alert(nombreProducto + " - Precio: $" + totalPedido);
 
-    alert("Procesando pedido...");
+  // 2. Revisar que haya ingredientes
+  if (cafe < cafeNecesario || te < teNecesario || agua < aguaNecesaria || leche < lecheNecesaria || vasos < 1) {
+    alert("Producto agotado");
+    return;
+  }
 
-    // 2. Revisar que haya ingredientes
-    if (cafe < cafeNecesario || te < teNecesario || agua < aguaNecesaria || leche < lecheNecesaria || vasos < 1) {
+  // 3. Azucar
+  let conAzucar = confirm("¿Desea añadir azucar? (+$" + precioAzucar + ")");
 
-      alert("Producto agotado");
-
+  if (conAzucar === true) {
+    if (azucar >= azucarPorPorcion) {
+      totalPedido = totalPedido + precioAzucar;
     } else {
-
-      // 3. Azucar
-      conAzucar = confirm("¿Desea añadir azucar? (+$" + precioAzucar + ")");
-
-      if (conAzucar === true) {
-        if (azucar >= azucarPorPorcion) {
-          totalPedido = totalPedido + precioAzucar;
-        } else {
-          alert("No hay azucar suficiente");
-          conAzucar = false;
-        }
-      }
-
-      // 4. Cobrar
-      //Primero dice no billetes mas alla de 20
-      alert("Debe pagar: $" + totalPedido);
-      dineroIngresado = parseInt(prompt("Ingrese el dinero (maximo $20000)"));
-
-      while (isNaN(dineroIngresado) || dineroIngresado > 20000) {
-        alert("Solo se aceptan billetes hasta $20000 (ಠ_ರೃ)");
-        dineroIngresado = parseInt(prompt("Ingrese el dinero (maximo $20000)"));
-      }
-
-      //sigue proceso normal
-
-      if (dineroIngresado >= totalPedido) {
-
-        // 5. Servir: se gasta el inventario
-        cafe = cafe - cafeNecesario;
-        te = te - teNecesario;
-        agua = agua - aguaNecesaria;
-        leche = leche - lecheNecesaria;
-        vasos = vasos - 1;
-
-        if (conAzucar === true) {
-          azucar = azucar - azucarPorPorcion;
-        }
-
-        contenidoVaso = aguaNecesaria + lecheNecesaria;
-        alert("Su " + productoServido + " esta listo: " + contenidoVaso + " ml");
-
-        // 6. Vueltas
-        cambio = dineroIngresado - totalPedido;
-
-        if (cambio > 0) {
-          darCambio(cambio);
-        } else {
-          alert("Pago exacto, no hay cambio");
-        }
-
-        alert("Pedido terminado");
-
-      } else {
-
-        alert("Dinero insuficiente. Pedido cancelado");
-
-      }
+      alert("No hay azucar suficiente");
+      conAzucar = false;
     }
   }
 
+  // 4. Cobrar (usa el saldo que el usuario ya abono)
+  if (saldo < totalPedido) {
+    alert("Saldo insuficiente. Debe pagar $" + totalPedido + " y tiene $" + saldo);
+    return;
+  }
 
+  // 5. Servir: se gasta el inventario
+  saldo = saldo - totalPedido;
+  cafe = cafe - cafeNecesario;
+  te = te - teNecesario;
+  agua = agua - aguaNecesaria;
+  leche = leche - lecheNecesaria;
+  vasos = vasos - 1;
 
+  if (conAzucar === true) {
+    azucar = azucar - azucarPorPorcion;
+  }
 
+  contenidoVaso = aguaNecesaria + lecheNecesaria;
 
+  // Sale en el dispensador de la maquina
+  dispensador.innerHTML = '<img src="img/' + imagenProducto + '" alt="' + nombreProducto + '" title="Click para retirar">';
 
-  
+  alert("Su " + productoServido + " esta listo: " + contenidoVaso + " ml");
 
-if (
-  cafe < cafeNecesario ||
-  agua < aguaNecesaria ||
-  leche < lecheNecesaria ||
-  vasos < 1
-) {
+  mostrarSaldo();
+  mostrarStock();
+}
 
-  mensaje = "Producto agotado";
-
-} else {
-
-  mensaje = "Hay ingredientes suficientes :(";
-
+// Boton "Devolver cambio" y boton X
+function devolverSaldo() {
+  if (saldo > 0) {
+    darCambio(saldo);
+  } else {
+    alert("No hay saldo para devolver");
+  }
+  dispensador.innerHTML = "";
 }
 
 
+// EVENTOS BOTONES
 
+// Boton "Abonar" (el formulario)
+formulario.addEventListener("submit", function (evento) {
+  evento.preventDefault(); // para que no recargue la pagina
 
+  let dinero = parseInt(inputDinero.value);
 
-
-
-
-
-function calcularDinero() {
-
-  dineroIngresado = parseInt(prompt("Ingrese el dinero"));
-
-  if (dineroIngresado < totalPedido) {
-
-    mensaje = "Saldo insuficiente";
-    return -1;
-
+  if (isNaN(dinero) || dinero <= 0) {
+    alert("Ingrese un valor valido");
+  } else if (dinero > 20000) {
+    alert("Solo se aceptan billetes hasta $20000 (ಠ_ರೃ)");
   } else {
-
-    cambio = dineroIngresado - totalPedido;
-
-    return cambio;
-
-  }}
-
-
-
-
-  //ingredientes
-
-  if (mensaje === "Hay ingredientes suficientes") {
-
-    cambio = calcularDinero();
-
-    if (cambio !== -1) {
-
-      cafe = cafe - cafeNecesario;
-      agua = agua - aguaNecesaria;
-      leche = leche - lecheNecesaria;
-      vasos = vasos - 1;
-
+    saldo = saldo + dinero;
+    mostrarSaldo();
   }
 
-  // ESTO ES DE AZUCAR
+  inputDinero.value = "";
+});
 
-function añadirAzucar() {
-      return confirm("¿Desea añadir azucar?");
- }
+// Botones 1 al 5 (data-select)
+document.querySelector('[data-select="1"]').addEventListener("click", function () { pedirProducto(1); });
+document.querySelector('[data-select="2"]').addEventListener("click", function () { pedirProducto(2); });
+document.querySelector('[data-select="3"]').addEventListener("click", function () { pedirProducto(3); });
+document.querySelector('[data-select="4"]').addEventListener("click", function () { pedirProducto(4); });
+document.querySelector('[data-select="5"]').addEventListener("click", function () { pedirProducto(5); });
 
-    conAzucar = añadirAzucar();
+// Boton X (cancelar) y boton Devolver cambio (data-action)
+document.querySelector('[data-action="cancel"]').addEventListener("click", devolverSaldo);
+document.querySelector('[data-action="return-change"]').addEventListener("click", devolverSaldo);
 
-    if (conAzucar === true) {
-      totalPedido = totalPedido + precioAzucar;
-      azucar = azucar - azucarPorPorcion;
+// Click en el producto del dispensador = retirarlo
+dispensador.addEventListener("click", function () {
+  dispensador.innerHTML = "";
+});
 
-    }
+// Click en las salidas = recoger billetes o monedas
+salidaBilletes.addEventListener("click", function () { vaciarSalida(salidaBilletes); });
+salidaMonedas.addEventListener("click", function () { vaciarSalida(salidaMonedas); });
 
-
-      alert("Pedido finalizado");
-      alert("Total: $" + totalPedido);
-      alert("Su cambio es: $" + cambio);
-
-    }
-
-  }
-
-
-
-
-
-
-
-
-
-
-if(productoElegido === "Tinto")
-  totalPedido = tintoPrecio;
-  cafeNecesario = tintoCafe;
-  aguaNecesaria = tintoAgua;
-  lecheCecesaria = 0;
-
-    
-
-
-
-
-// Ejemplo: capuchino con azucar, pagando con un billete de 20000
-totalPedido = capuchinoPrecio;
-totalPedido = totalPedido + precioAzucar;
-
-// El usuario mete la plata y se calcula el cambio
-saldo = saldo + dineroIngresado;
-saldo = saldo - totalPedido;
-cambio = saldo;
-saldo = saldo - cambio;
-
-// Se restan los ingredientes y el vaso del inventario
-cafe = cafe - capuchinoCafe;
-leche = leche - capuchinoLeche;
-agua = agua - capuchinoAgua;
-azucar = azucar - azucarPorPorcion;
-vasos = vasos - 1;
-
-// Lo que lleva el vaso segun la receta (cabe en capacidadVaso)
-productoServido = "cafe";
-contenidoVaso = capuchinoCapacidad;
-
-// El billete de 20000 que metio el usuario queda guardado en la maquina
-billetes20000 = billetes20000 + 1;
-
-// Armar el cambio: se suman billetes y monedas de mayor a menor
-// hasta que la suma sea igual al cambio (16300 = 10000 + 5000 + 1000 + 200 + 100)
-sumaEntregada = sumaEntregada + 10000;
-entregaBilletes10000 = entregaBilletes10000 + 1;
-
-sumaEntregada = sumaEntregada + 5000;
-entregaBilletes5000 = entregaBilletes5000 + 1;
-
-sumaEntregada = sumaEntregada + 1000;
-entregaMonedas1000 = entregaMonedas1000 + 1;
-
-sumaEntregada = sumaEntregada + 200;
-entregaMonedas200 = entregaMonedas200 + 1;
-
-sumaEntregada = sumaEntregada + 100;
-entregaMonedas100 = entregaMonedas100 + 1;
-
-// Si la suma llego al cambio, no falta nada por dar
-faltaPorDar = cambio - sumaEntregada;
-
-// Se restan del inventario los billetes y monedas entregados
-billetes20000 = billetes20000 - entregaBilletes20000;
-billetes10000 = billetes10000 - entregaBilletes10000;
-billetes5000 = billetes5000 - entregaBilletes5000;
-billetes2000 = billetes2000 - entregaBilletes2000;
-monedas1000 = monedas1000 - entregaMonedas1000;
-monedas500 = monedas500 - entregaMonedas500;
-monedas200 = monedas200 - entregaMonedas200;
-monedas100 = monedas100 - entregaMonedas100;
-
-mensaje = "Finalizado";
+// Al abrir la pagina
+mostrarSaldo();
+mostrarStock();

@@ -87,6 +87,31 @@ agua + leche = 150 ml.
 
 ## PSEUDOCODIGO
 
+1. Se declaran las variables del inventario (cafe, leche, agua, te, azucar, vasos) con sus cantidades iniciales
+2. Se declaran las monedas y billetes que tiene la maquina para dar cambio
+3. Se declaran las recetas (precio y cantidades de cada producto) y el precio y gasto del azucar
+4. Se pone el saldo en 0 y se muestra en la pantalla (`credit`), y se muestra el stock de cada producto en la vitrina
+5. El usuario escribe el dinero y da clic en Abonar
+    - Si el valor no es valido o pasa de $20000, la maquina muestra un mensaje y no lo recibe
+    - Si es valido, saldo = saldo + dineroIngresado y se actualiza la pantalla
+6. El usuario da clic en un numero del 1 al 5 y la maquina sabe el producto elegido
+7. Segun el producto (switch) se cargan el precio, el nombre, la imagen y lo que necesita de cafe, te, leche y agua
+8. Se revisa el inventario: que haya suficiente cafe, te, leche, agua y minimo 1 vaso
+    - Si falta algo, la maquina muestra "Producto agotado" y vuelve al paso 5
+9. La maquina pregunta si quiere azucar
+    - Si dice que si y hay azucar, totalPedido = totalPedido + precioAzucar
+    - Si no hay azucar suficiente, avisa y sigue sin azucar
+10. Se compara el saldo con el totalPedido
+    - Si el saldo es menor, la maquina muestra "Saldo insuficiente" y el usuario puede abonar mas (paso 5)
+    - Si alcanza, continua
+11. La maquina sirve: saldo = saldo - totalPedido y resta del inventario los ingredientes, el vaso y el azucar (si la pidio)
+12. Se calcula lo que lleva el vaso (agua + leche) y la imagen del producto aparece en el dispensador
+13. Se actualizan el saldo en pantalla y el stock de la vitrina
+14. El usuario puede pedir otro producto con el saldo que queda (paso 6), abonar mas (paso 5) o dar clic en Devolver cambio (o en la X)
+15. Al devolver cambio, la maquina arma el cambio con billetes y monedas, empezando por el mas grande (20000, 10000, 5000, 2000, 1000, 500, 200 y 100). Se usa una denominacion mientras quepa en lo que falta y mientras haya en el inventario. Por ejemplo, para un cambio de $15800: 10000 + 5000 + 500 + 200 + 100 = 15800
+    - Se lleva la cuenta de cuantos billetes y monedas de cada denominacion se usaron
+16. La maquina resta del inventario los billetes y monedas entregados y muestra el total devuelto (el detalle sale por consola)
+=======
 1. Se declaran las cosas que hay en la maquina: cafe, leche, agua, te, azucar y vasos, con sus cantidades
 2. Se declaran los billetes y monedas que tiene la maquina para dar cambio
 3. Se declaran los precios y lo que lleva cada producto, y el precio del azucar
