@@ -13,7 +13,7 @@ El usuario ingresa dinero con el formulario (boton **Abonar**), escoge el produc
 
 ## **ENTRADAS**
 
-#### *Productos/Inventario (valores iniciales):*
+#### *Productos/Inventario (valores iniciales)*
 - Saldo (variable, Number, $): empieza en 0
 - Cafe (variable, Number, g): 500
 - Leche (variable, Number, ml): 2000
